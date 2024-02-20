@@ -1,0 +1,40 @@
+let randomNumber = Math.floor(Math.random() * 100) + 1;
+let guesses = 0;
+
+function checkGuess() {
+    let userGuess = Number(document.getElementById('guessField').value);
+    let historyText = document.getElementById('history');
+
+    if (guesses === 0) {
+        historyText.innerHTML = 'Previous guesses: ';
+    }
+    guesses++;
+    historyText.innerHTML += userGuess + ' ';
+
+    if (userGuess === randomNumber) {
+        alert('Congratulations! You got it right!');
+        resetGame();
+    } else if (guesses >= 10) {
+        alert('!!!GAME OVER!!! The number was ' + randomNumber);
+        resetGame();
+    } else {
+        if (userGuess < randomNumber) {
+            alert('Your guess is too low!');
+        } else if (userGuess > randomNumber) {
+            alert('Your guess is too high!');
+        }
+    }
+}
+
+function resetGame() {
+    randomNumber = Math.floor(Math.random() * 100) + 1;
+    guesses = 0;
+    document.getElementById('history').innerHTML = '';
+    document.getElementById('guessField').value = '';
+}
+
+document.getElementById('guessField').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+        checkGuess();
+    }
+});
